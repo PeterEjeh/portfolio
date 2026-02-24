@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-heading: "Sora", system-ui, sans-serif;
+}
+
+/* ─── DARK THEME (default :root = dark, .dark class) ─── */
+@layer base {
+
+  :root,
+  .dark {
+    --background: 10 10 15;
+    --foreground: 240 240 255;
+    --card: 15 15 25;
+    --card-foreground: 240 240 255;
+    --muted: 30 30 50;
+    --muted-foreground: 150 150 180;
+    --accent: 139 92 246;
+    --accent-2: 59 130 246;
+    --border: 40 40 65;
+    --nav-bg: rgba(10, 10, 20, 0.75);
+    --glass-bg: rgba(15, 15, 30, 0.6);
+    --glass-light-bg: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(139, 92, 246, 0.15);
+    --glass-light-border: rgba(255, 255, 255, 0.06);
+  }
+
+  /* ─── LIGHT THEME ─── */
+  .light {
+    --background: 248 246 255;
+    --foreground: 18 14 40;
+    --card: 255 255 255;
+    --card-foreground: 18 14 40;
+    --muted: 232 228 248;
+    --muted-foreground: 75 65 120;
+    --accent: 109 62 216;
+    --accent-2: 37 99 235;
+    --border: 220 215 240;
+    --nav-bg: rgba(250, 248, 255, 0.88);
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-light-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(109, 62, 216, 0.12);
+    --glass-light-border: rgba(109, 62, 216, 0.09);
+  }
+
+  * {
+    border-color: rgb(var(--border));
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    background: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Beautiful light mode background — soft lavender gradient with ambient orbs */
+  .light body {
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(167, 139, 250, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 15%, rgba(99, 102, 241, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 50% 110%, rgba(196, 181, 253, 0.14) 0%, transparent 60%),
+      linear-gradient(160deg, #faf9ff 0%, #f4f0ff 35%, #faf7ff 65%, #f0f4ff 100%);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.25);
+    color: rgb(var(--foreground));
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.45);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.75);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #7c3aed, #2563eb, #6d28d9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .dark .text-gradient {
+    background: linear-gradient(135deg, #a78bfa, #60a5fa, #818cf8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .bg-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .bg-glass-light {
+    background: var(--glass-light-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-light-border);
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.12), 0 0 80px rgba(139, 92, 246, 0.04);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.12), 0 0 80px rgba(59, 130, 246, 0.04);
+  }
+
+  .noise-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  .section-padding {
+    padding: 6rem 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding: 8rem 2rem;
+    }
+  }
+
+  /* ─── Theme-adaptive semantic utilities ─────────────────────────────────
+     These use CSS custom properties so they work in BOTH .light and .dark
+     without needing Tailwind's dark: modifier.
+  ─────────────────────────────────────────────────────────────────────── */
+
+  /* Text colours */
+  .t-body {
+    color: rgb(var(--foreground));
+  }
+
+  .t-muted {
+    color: rgba(var(--foreground), 0.55);
+  }
+
+  .t-subtle {
+    color: rgba(var(--foreground), 0.40);
+  }
+
+  .t-faint {
+    color: rgba(var(--foreground), 0.25);
+  }
+
+  /* Card / surface backgrounds — uses --border variable for visible borders in both themes */
+  .s-card {
+    background: rgb(var(--card));
+    border: 1px solid rgb(var(--border));
+    box-shadow: 0 1px 4px rgba(var(--foreground), 0.05), 0 4px 16px rgba(var(--foreground), 0.04);
+  }
+
+  .s-card-hover:hover {
+    border-color: rgba(var(--accent), 0.4);
+    box-shadow: 0 4px 20px rgba(var(--accent), 0.1), 0 1px 4px rgba(var(--foreground), 0.06);
+  }
+
+  /* Input fields */
+  .s-input {
+    background: rgb(var(--card));
+    border: 1px solid rgb(var(--border));
+    color: rgb(var(--foreground));
+  }
+
+  .s-input::placeholder {
+    color: rgba(var(--foreground), 0.35);
+  }
+
+  .s-input:focus {
+    outline: none;
+    border-color: rgb(var(--accent));
+    background: rgba(var(--accent), 0.03);
+    box-shadow: 0 0 0 3px rgba(var(--accent), 0.12);
+  }
+
+  /* Icon button (social link style) */
+  .s-icon-btn {
+    background: rgb(var(--card));
+    border: 1px solid rgb(var(--border));
+    color: rgba(var(--foreground), 0.55);
+  }
+
+  .s-icon-btn:hover {
+    color: rgb(var(--accent));
+    border-color: rgba(var(--accent), 0.4);
+    background: rgba(var(--accent), 0.07);
+  }
+
+  /* Dividers */
+  .s-divider {
+    border-color: rgb(var(--border));
+  }
+}
+
+
+/* Grid pattern */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.light .grid-pattern {
+  background-image:
+    linear-gradient(rgba(109, 62, 216, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109, 62, 216, 0.06) 1px, transparent 1px);
+}
+
+/* ─── Print / Save as PDF ───────────────────────────────────────────────── */
+@media print {
+
+  /* Hide site chrome */
+  nav,
+  header,
+  footer,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Remove page margins around the CV content */
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Let the CV page fill the page width */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
