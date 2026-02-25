@@ -30,9 +30,48 @@ export async function sendContact(
         return { success: false, error: firstError };
     }
 
-    // In production: integrate with email service (Resend, SendGrid, etc.)
-    // For now, simulate a successful send
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    const accessKey = process.env.WEB3FORMS_KEY;
+    if (!accessKey || accessKey === "your_access_key_here") {
+        console.error("WEB3FORMS_KEY is not configured");
+        return { success: false, error: "Contact form is not configured yet — please try emailing me directly." };
+    }
 
-    return { success: true };
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify({
+                access_key: accessKey,
+                name: result.data.name,
+                email: result.data.email,
+                message: result.data.message,
+                subject: `Portfolio contact from ${result.data.name}`,
+                from_name: "Peter Ejeh Portfolio",
+                botcheck: false,
+            }),
+        });
+
+        // Web3Forms can return HTML on bad keys — safely parse text first
+        const text = await response.text();
+        let json: { success?: boolean; message?: string } = {};
+        try {
+            json = JSON.parse(text);
+        } catch {
+            console.error("Non-JSON response from Web3Forms:", text.slice(0, 200));
+            return { success: false, error: "Unexpected response from mail service. Please try again." };
+        }
+
+        if (!response.ok || !json.success) {
+            console.error("Web3Forms error:", json.message ?? text.slice(0, 200));
+            return { success: false, error: json.message ?? "Failed to send. Please try again." };
+        }
+
+        return { success: true };
+    } catch (err) {
+        console.error("Contact form fetch error:", err);
+        return { success: false, error: "Network error. Please check your connection and try again." };
+    }
 }
